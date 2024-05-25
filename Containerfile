@@ -6,16 +6,8 @@
 
 # SOURCE_IMAGE arg can be anything from ublue upstream which matches your desired version:
 # See list here: https://github.com/orgs/ublue-os/packages?repo_name=main
-# - "silverblue"
-# - "kinoite"
-# - "sericea"
-# - "onyx"
-# - "lazurite"
-# - "vauxite"
-# - "base"
 #
-#  "aurora", "bazzite", "bluefin" or "ucore" may also be used but have different suffixes.
-ARG SOURCE_IMAGE="silverblue"
+ARG SOURCE_IMAGE="bazzite"
 
 ## SOURCE_SUFFIX arg should include a hyphen and the appropriate suffix name
 # These examples all work for silverblue/kinoite/sericea/onyx/lazurite/vauxite/base
@@ -33,25 +25,26 @@ ARG SOURCE_IMAGE="silverblue"
 # - stable-zfs
 # - stable-nvidia-zfs
 # - (and the above with testing rather than stable)
-ARG SOURCE_SUFFIX="-main"
+ARG SOURCE_SUFFIX="-stable"
 
 ## SOURCE_TAG arg must be a version built for the specific image: eg, 39, 40, gts, latest
 ARG SOURCE_TAG="latest"
 
-
 ### 2. SOURCE IMAGE
 ## this is a standard Containerfile FROM using the build ARGs above to select the right upstream image
-FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
-
+FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG} AS cobalt
 
 ### 3. MODIFICATIONS
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
-COPY build.sh /tmp/build.sh
+COPY system_files /
+COPY scripts /tmp/scripts
 
 RUN mkdir -p /var/lib/alternatives && \
-    /tmp/build.sh && \
+    /tmp/scripts/install_packages.sh && \
+    /tmp/scripts/install_flatpaks.sh && \
+    /tmp/scripts/cleanup.sh && \
     ostree container commit
 ## NOTES:
 # - /var/lib/alternatives is required to prevent failure with some RPM installs

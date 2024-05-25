@@ -1,0 +1,13 @@
+[Unit]
+Description=Install Cobalt Flatpaks
+ConditionPathExists=/var/lib/flatpak/.cobalt-initialized
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh =c "flatpak --system install --nointeractive $(curl https://raw.githubusercontent.com/retchohrips/cobalt/main/flatpaks/cobalt_flatpaks | tr '\n' ' ')"
+ExecStartPost=/usr/bin/touch /var/lib/flatpak/.cobalt-initialized
+
+[Install]
+WantedBy=multi-user.target
