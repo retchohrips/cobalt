@@ -25,14 +25,11 @@ ARG SOURCE_IMAGE="bazzite"
 # - stable-zfs
 # - stable-nvidia-zfs
 # - (and the above with testing rather than stable)
-ARG SOURCE_SUFFIX="-stable"
-
-## SOURCE_TAG arg must be a version built for the specific image: eg, 39, 40, gts, latest
-ARG SOURCE_TAG="latest"
+ARG SOURCE_TAG="stable"
 
 ### 2. SOURCE IMAGE
 ## this is a standard Containerfile FROM using the build ARGs above to select the right upstream image
-FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG} AS cobalt
+FROM ghcr.io/ublue-os/${SOURCE_IMAGE}:${SOURCE_TAG} AS cobalt
 
 ### 3. MODIFICATIONS
 ## make modifications desired in your image and install packages by modifying the build.sh script
