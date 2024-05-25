@@ -6,7 +6,8 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/bin/sh =c "flatpak --system install --nointeractive $(curl https://raw.githubusercontent.com/retchohrips/cobalt/main/flatpaks/cobalt_flatpaks | tr '\n' ' ')"
+ExecStart=/bin/sh -c "flatpak --system install --nointeractive $(curl https://raw.githubusercontent.com/retchohrips/cobalt/main/flatpaks/cobalt_flatpaks | tr '\n' ' ')"
+ExecStartPost=/bin/sh -c "flatpak --system uninstall --nointeractive org.mozilla.firefox"
 ExecStartPost=/usr/bin/touch /var/lib/flatpak/.cobalt-initialized
 
 [Install]
