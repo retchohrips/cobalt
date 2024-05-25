@@ -2,4 +2,4 @@
 
 set -ouex pipefail
 
-systemclt enable flatpak-install.service
+systemctl enable flatpak-install.service
