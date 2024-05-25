@@ -2,4 +2,4 @@
 
 set -ouex pipefail
 
-systemctl enable flatpak-install.service
+systemctl enable flatpak-install-cobalt.service
