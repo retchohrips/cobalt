@@ -39,7 +39,7 @@ COPY system_files /
 COPY scripts /tmp/scripts
 
 RUN mkdir -p /var/lib/alternatives && \
-    /tmp/scripts/fix_tablet.sh && \
+    /tmp/scripts/change_kernel_params.sh && \
     /tmp/scripts/install_packages.sh && \
     /tmp/scripts/install_flatpaks.sh && \
     /tmp/scripts/cleanup.sh && \

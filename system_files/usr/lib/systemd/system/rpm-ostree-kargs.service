@@ -1,0 +1,14 @@
+[Unit]
+Description=Change kernel boot parameters with rpm-ostree
+ConditionPathExists=!/var/lib/%N.stamp
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/rpm-ostree kargs \
+    --append-if-missing=modprobe.blacklist=hid_uclogic \
+    --append-if-missing=quiet --append-if-missing=loglevel=0 \
+ExecStart=/bin/touch /var/lib/%N.stamp$fill\
+
+[Install]
+WantedBy=multi-user.target
