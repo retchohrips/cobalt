@@ -42,6 +42,7 @@ RUN mkdir -p /var/lib/alternatives && \
     /tmp/scripts/change_kernel_params.sh && \
     /tmp/scripts/install_packages.sh && \
     /tmp/scripts/install_flatpaks.sh && \
+    /tmp/scripts/just.sh && \
     /tmp/scripts/cleanup.sh && \
     ostree container commit
 ## NOTES:
