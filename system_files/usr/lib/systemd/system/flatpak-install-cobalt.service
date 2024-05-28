@@ -1,6 +1,6 @@
 [Unit]
 Description=Install Cobalt Flatpaks
-ConditionPathExists=/var/lib/flatpak/.cobalt-initialized
+ConditionPathExists=!/var/lib/flatpak/.cobalt-initialized
 Wants=network-online.target
 
 [Service]
